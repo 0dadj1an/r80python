@@ -43,12 +43,13 @@ else:
 #################
 
 with open('hosts.csv') as csvfile:
-	reader=csv.DictReader(csvfile)
-	for row in reader:
-		print row['name'] , row['ip'], row['type'], row['comments'] , row['group']
-		host=r80_apis.add_host(sid,url,row['name'],row['ip'],row['group'],row['comments'],"")
-		print host
-		
+    reader=csv.DictReader(csvfile)
+    for row in reader:
+         natsettings ={}
+         print row['name'] , row['ip'], row['type'], row['comments'] , row['group'],
+         host=r80_apis.add_host(sid,url,row['name'],row['ip'],"", row['comments'],"")
+         print host
+        
 ################
 #publish
 ################

@@ -31,7 +31,7 @@ def login(url,user,pw):
 def add_host(sid,url,name,ip_address,groups="",comments="",nat_settings=""):
         payload_list={}
         payload_list['name']=name
-        payload_list['ip-address']= ip_address
+        payload_list['ipv4-address']= ip_address
 	if nat_settings != "":
         	payload_list['nat-settings']= nat_settings
 	if groups != "" :
@@ -44,8 +44,10 @@ def add_host(sid,url,name,ip_address,groups="",comments="",nat_settings=""):
             'Accept': "*/*",
             'x-chkp-sid': sid,
         }
+        print payload_list
         response = requests.post(url+"add-host", json=payload_list, headers=headers, verify=False)
-        return response
+        
+        return response.json()
 
 def delete_host(sid,url,name):
         payload_list={}
@@ -63,7 +65,7 @@ def delete_host(sid,url,name):
 def add_network(sid,url,name,subnet,mask_length,nat_settings,groups):
         payload_list={}
         payload_list['name']=name
-        payload_list['subnet']= subnet 
+        payload_list['subnet4']= subnet 
         payload_list['mask-length']= mask_length 
         payload_list['nat-settings']= nat_settings
         payload_list['groups']= groups            
@@ -74,7 +76,7 @@ def add_network(sid,url,name,subnet,mask_length,nat_settings,groups):
             'x-chkp-sid': sid,
         }
         response = requests.post(url+"add-network", json=payload_list, headers=headers, verify=False)
-        return response
+        return response.json()
 
 def delete_network(sid,url,name):
         payload_list={}
@@ -229,6 +231,7 @@ def delete_access_rule_by_rule_name(sid,url,layer,name):
         }
         response = requests.post(url+"delete-access-rule", json=payload_list, headers=headers, verify=False)
         return response
+	
 
 def publish(sid,url):
         payload_list={}
@@ -239,6 +242,17 @@ def publish(sid,url):
         }
         response = requests.post(url+"publish", json=payload_list, headers=headers, verify=False)
         return response
+       
+def add_range():
+	    payload_list={}
+	    headers = {
+			'content-type': "application/json",
+            'Accept': "*/*",
+            'x-chkp-sid': sid,
+			}
+	    response = requests.post(url+"publish", json=payload_list, headers=headers, verify=False)
+	    return response
+       
 
 def show_task(sid,url,task):
         payload_list={}
